@@ -187,7 +187,8 @@ def _fail(agent, term, intention):
 @actions.add(".my_name", 1)
 @agentspeak.optimizer.function_like
 def _my_name(agent, term, intention):
-    if agentspeak.unify(term.args[0], Literal(agent.name), intention.scope, intention.stack):
+    # MRP: sustituido Literal(agent.name) por str(agent.name).
+    if agentspeak.unify(term.args[0], str(agent.name), intention.scope, intention.stack):
         yield
 
 
