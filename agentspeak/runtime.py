@@ -622,6 +622,13 @@ class Agent:
         if term.functor is None:
             raise AslError("expected belief literal")
 
+        # Add source(self) annotation if not already present
+        has_source = any(ann.functor == "source" for ann in term.annots)
+        if not has_source:
+            term = term.with_annotation(
+                agentspeak.Literal("source", (agentspeak.Literal("self"), ))
+            )
+
         self.beliefs[(term.functor, len(term.args))].add(term)
 
     def test_belief(self, term, intention):
